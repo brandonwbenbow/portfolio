@@ -1,5 +1,5 @@
 backend:
-  name: portfolio
+  name: github
   repo: brandonwbenbow/portfolio
 
 media_folder: content/assets
