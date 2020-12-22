@@ -4,6 +4,9 @@ import { Link } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Button from "../components/button"
+import StyledLink from "../components/link"
+
+import "../css/layout.css"
 
 class IndexPage extends React.Component {
   render() {
@@ -15,22 +18,33 @@ class IndexPage extends React.Component {
           title="Home"
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}
         />
-        <img style={{ margin: 0 }} src="./GatsbyScene.svg" alt="Gatsby Scene" />
-        <h1>
-          Hey people{" "}
-          <span role="img" aria-label="wave emoji">
-            👋
-          </span>
-        </h1>
-        <p>Welcome to your new Gatsby website. You are on your home page.</p>
-        <p>
-          This starter comes out of the box with styled components and Gatsby's
-          default starter blog running on Netlify CMS.
-        </p>
-        <p>Now go build something great!</p>
-        <Link to="/blog/">
-          <Button marginTop="35px">Go to Blog</Button>
-        </Link>
+        <div className="flex-center" style={{maxHeight: "100vh", height: "100vh", width: "100%"}}>
+          <img style={{position: "absolute", objectFit: "cover", filter: "brightness(0.6)", height: "100vh", width: "100%"}} src="./assets/beach.jpeg"></img>
+          <div className="flex-center" style={{flexDirection: "column", position: "relative"}}>
+            <div className="flex-center" style={{justifyContent: "flex-start", padding: "5px", width: "100%"}}>
+              <StyledLink className="float-hover" path="https://twitter.com/brandon_benbow" extraStyle={{display: "flex", alignItems: "flex-end"}}>
+                <img style={{margin: "0px", padding: "5px", marginLeft: "5px", marginRight: "5px", width: "50px", height: "60px"}} src="./assets/twitter-logo.svg"></img>
+              </StyledLink>
+              <StyledLink className="float-hover" path="https://github.com/brandonwbenbow" extraStyle={{display: "flex", alignItems: "flex-end"}}>
+                <img style={{margin: "0px", padding: "5px", marginLeft: "5px", marginRight: "5px", width: "50px", height: "60px"}} src="./assets/github-logo.svg"></img>
+              </StyledLink>
+            </div>
+            <div style={{borderTop: "solid 12px #eaeaea", borderBottom: "solid 12px #eaeaea", marginTop: "-5px"}}>
+              <h1 className="fit-index-title" style={{margin: "0px", padding: "15px"}}>Brandon Benbow</h1>
+            </div>
+            <div style={{width: "100%", display: "flex", justifyContent: "space-around"}}>
+              <StyledLink className="sink-hover" path="/projects/" extraStyle={{padding: "5px", marginLeft: "10px", marginRight: "10px"}}>
+                <h4 className="fit-index">projects</h4>
+              </StyledLink>
+              <StyledLink className="sink-hover" path="/contact/" extraStyle={{padding: "5px", marginLeft: "10px", marginRight: "10px"}}>
+                <h4 className="fit-index">contact</h4>
+              </StyledLink>
+              <StyledLink className="sink-hover" path="/blog/" extraStyle={{padding: "5px", marginLeft: "10px", marginRight: "10px"}}>
+                <h4 className="fit-index">blog</h4>
+              </StyledLink>
+            </div>
+          </div>
+        </div>
       </Layout>
     )
   }

@@ -6,6 +6,10 @@ import * as queryString from "query-string"
 
 import { rhythm } from "../utils/typography"
 
+import StyledLink from "./link"
+
+import "../css/layout.css"
+
 const SearchBar = styled.div`
   display: flex;
   border: 1px solid #dfe1e5;
@@ -57,9 +61,9 @@ const SearchedPosts = ({ results }) =>
               marginBottom: rhythm(1 / 4),
             }}
           >
-            <Link style={{ boxShadow: `none` }} to={`/blog${slug}`}>
+            <StyledLink path={`/blog${slug}`}>
               {title}
-            </Link>
+            </StyledLink>
           </h3>
           <small>{date}</small>
           <p
@@ -81,23 +85,23 @@ const AllPosts = ({ posts }) => (
     {posts.map(({ node }) => {
       const title = node.frontmatter.title || node.fields.slug
       return (
-        <div key={node.fields.slug}>
+      <StyledLink path={`/blog${node.fields.slug}`}>
+        <div key={node.fields.slug} className="lighten-div" style={{marginBottom: "10px"}}>
           <h3
             style={{
               marginBottom: rhythm(1 / 4),
             }}
           >
-            <Link style={{ boxShadow: `none` }} to={`/blog${node.fields.slug}`}>
-              {title}
-            </Link>
+          {title}
           </h3>
-          <small>{node.frontmatter.date}</small>
-          <p
+          <small style={{fontSize: "initial"}}>{node.frontmatter.date}</small>
+          <p style={{fontSize: "initial"}}
             dangerouslySetInnerHTML={{
               __html: node.frontmatter.description || node.excerpt,
             }}
           />
         </div>
+      </StyledLink>
       )
     })}
   </div>

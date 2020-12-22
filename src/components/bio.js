@@ -21,7 +21,7 @@ function Bio() {
         return (
           <Container>
             <Image
-              fixed={data.avatar.childImageSharp.fixed}
+              fixed={null}
               alt={author}
               style={{
                 marginRight: rhythm(1 / 2),

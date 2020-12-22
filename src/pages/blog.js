@@ -1,11 +1,13 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 
-import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Button from "../components/button"
 import SearchPosts from "../components/searchPosts"
+import StyledLink from "../components/link"
+
+import "../css/layout.css"
 
 class Blog extends React.Component {
   render() {
@@ -17,16 +19,30 @@ class Blog extends React.Component {
     return (
       <Layout location={this.props.location} title={siteTitle}>
         <SEO title="All posts" />
-        <Bio />
-        <SearchPosts
-          posts={posts}
-          localSearchBlog={localSearchBlog}
-          navigate={navigate}
-          location={location}
-        />
-        <Link to="/">
-          <Button marginTop="85px">Go Home</Button>
-        </Link>
+        <div style={{width: "100%", height: "100vh", backgroundColor: "#333333", display: "flex", flexDirection: "column", alignItems: "center"}}>
+          <div style={{widht: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "10vh", width: "70%", flexWrap: "wrap", marginTop: "15px"}}>
+            <h1 style={{color: "#eaeaea", margin: "0px", flex: 1}}>Blog</h1>
+            <div style={{alignItems: "center", flex: 1, display: "flex", justifyContent: "space-between"}}>
+              <StyledLink className="fit-blog" path="/" extraStyle={{padding: "5px", marginLeft: "10px", marginRight: "10px"}}>
+                home
+              </StyledLink>
+              <StyledLink className="fit-blog" path="/projects/" extraStyle={{padding: "5px", marginLeft: "10px", marginRight: "10px"}}>
+                projects
+              </StyledLink>
+              <StyledLink className="fit-blog" path="/contact/" extraStyle={{padding: "5px", marginLeft: "10px", marginRight: "10px"}}>
+                contact
+              </StyledLink>
+            </div>
+          </div>
+          <div style={{width: "70%"}}>
+          <SearchPosts
+            posts={posts}
+            localSearchBlog={localSearchBlog}
+            navigate={navigate}
+            location={location}
+          />
+          </div>
+        </div>
       </Layout>
     )
   }
