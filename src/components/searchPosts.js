@@ -61,7 +61,7 @@ const SearchedPosts = ({ results }) =>
               marginBottom: rhythm(1 / 4),
             }}
           >
-            <StyledLink path={`/blog${slug}`}>
+            <StyledLink path={`/devlog${slug}`}>
               {title}
             </StyledLink>
           </h3>
@@ -85,7 +85,7 @@ const AllPosts = ({ posts }) => (
     {posts.map(({ node }) => {
       const title = node.frontmatter.title || node.fields.slug
       return (
-      <StyledLink path={`/blog${node.fields.slug}`}>
+      <StyledLink path={`/devlog${node.fields.slug}`}>
         <div key={node.fields.slug} className="lighten-div" style={{marginBottom: "10px"}}>
           <h3
             style={{
@@ -134,7 +134,7 @@ const SearchPosts = ({ posts, localSearchBlog, location, navigate }) => {
           value={query}
           onChange={e => {
             navigate(
-              e.target.value ? `/blog/?search=${e.target.value}` : "/blog/"
+              e.target.value ? `/devlog/?search=${e.target.value}` : "/devlog/"
             )
             setQuery(e.target.value)
           }}
