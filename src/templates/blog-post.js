@@ -22,7 +22,7 @@ class BlogPostTemplate extends React.Component {
         <div style={{width: "100%", height: "100vh", backgroundColor: "#333333", display: "flex", flexDirection: "column", alignItems: "center"}}>
           <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "10vh", width: "70%", flexWrap: "wrap", marginTop: "15px"}}>
             <StyledLink className="fit-blog" path="/devlog" extraStyle={{padding: "5px", margin: "0px", flex: 1}}>
-              <h1 style={{color: "#eaeaea"}}>Devlog</h1>
+              <h1 style={{color: "#eaeaea", margin: "0px"}}>Devlog</h1>
             </StyledLink>
             <div style={{alignItems: "center", flex: 1, display: "flex", justifyContent: "space-between"}}>
               <StyledLink className="fit-blog" path="/" extraStyle={{padding: "5px", marginLeft: "10px", marginRight: "10px"}}>
