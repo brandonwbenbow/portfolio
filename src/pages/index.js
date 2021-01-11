@@ -16,7 +16,7 @@ class IndexPage extends React.Component {
       <Layout location={this.props.location} title={siteTitle}>
         <SEO
           title="Home"
-          keywords={[`blog`, `gatsby`, `javascript`, `react`]}
+          keywords={[`blog`, `devlog`, `gatsby`, `javascript`, `react`]}
         />
         <div className="flex-center" style={{maxHeight: "100vh", height: "100vh", width: "100%"}}>
           <img style={{position: "absolute", objectFit: "cover", filter: "brightness(0.6)", height: "100vh", width: "100%"}} src="./assets/beach.jpeg"></img>
@@ -39,8 +39,8 @@ class IndexPage extends React.Component {
               <StyledLink className="sink-hover" path="/contact/" extraStyle={{padding: "5px", marginLeft: "10px", marginRight: "10px"}}>
                 <h4 className="fit-index">contact</h4>
               </StyledLink>
-              <StyledLink className="sink-hover" path="/blog/" extraStyle={{padding: "5px", marginLeft: "10px", marginRight: "10px"}}>
-                <h4 className="fit-index">blog</h4>
+              <StyledLink className="sink-hover" path="/devlog/" extraStyle={{padding: "5px", marginLeft: "10px", marginRight: "10px"}}>
+                <h4 className="fit-index">devlog</h4>
               </StyledLink>
             </div>
           </div>
