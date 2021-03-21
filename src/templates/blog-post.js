@@ -5,7 +5,7 @@ import { MDXRenderer } from "gatsby-plugin-mdx"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
-import StyledLink from "../components/link"
+import {StyledLink} from "../components/link"
 
 class BlogPostTemplate extends React.Component {
   render() {
