@@ -13,4 +13,14 @@ class StyledLink extends React.Component {
     }
 }
 
-export default StyledLink
+class StyledA extends React.Component {
+    render() {
+        const { path, extraStyle, className, children } = this.props;
+
+        return (
+            <a className={className} style={{color: "#eaeaea", textDecoration: "none", ...extraStyle}} href={path}>{children}</a>
+        )
+    }
+}
+
+export {StyledLink, StyledA}

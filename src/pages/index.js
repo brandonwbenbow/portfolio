@@ -4,7 +4,7 @@ import { Link } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Button from "../components/button"
-import StyledLink from "../components/link"
+import {StyledLink, StyledA} from "../components/link"
 
 import "../css/layout.css"
 
@@ -18,16 +18,17 @@ class IndexPage extends React.Component {
           title="Home"
           keywords={[`blog`, `devlog`, `gatsby`, `javascript`, `react`]}
         />
+        <script data-ad-client="ca-pub-8631961845697038" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <div className="flex-center" style={{maxHeight: "100vh", height: "100vh", width: "100%"}}>
           <img style={{position: "absolute", objectFit: "cover", filter: "brightness(0.6)", height: "100vh", width: "100%"}} src="./assets/beach.jpeg"></img>
           <div className="flex-center" style={{flexDirection: "column", position: "relative"}}>
             <div className="flex-center" style={{justifyContent: "flex-start", padding: "5px", width: "100%"}}>
-              <StyledLink className="float-hover" path="https://twitter.com/brandon_benbow" extraStyle={{display: "flex", alignItems: "flex-end"}}>
+              <StyledA className="float-hover" path="https://twitter.com/brandon_benbow" extraStyle={{display: "flex", alignItems: "flex-end"}}>
                 <img style={{margin: "0px", padding: "5px", marginLeft: "5px", marginRight: "5px", width: "50px", height: "60px"}} src="./assets/twitter-logo.svg"></img>
-              </StyledLink>
-              <StyledLink className="float-hover" path="https://github.com/brandonwbenbow" extraStyle={{display: "flex", alignItems: "flex-end"}}>
+              </StyledA>
+              <StyledA className="float-hover" path="https://github.com/brandonwbenbow" extraStyle={{display: "flex", alignItems: "flex-end"}}>
                 <img style={{margin: "0px", padding: "5px", marginLeft: "5px", marginRight: "5px", width: "50px", height: "60px"}} src="./assets/github-logo.svg"></img>
-              </StyledLink>
+              </StyledA>
             </div>
             <div style={{borderTop: "solid 12px #eaeaea", borderBottom: "solid 12px #eaeaea", marginTop: "-5px"}}>
               <h1 className="fit-index-title" style={{margin: "0px", padding: "15px"}}>Brandon Benbow</h1>
