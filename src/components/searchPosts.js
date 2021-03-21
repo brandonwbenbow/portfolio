@@ -6,7 +6,7 @@ import * as queryString from "query-string"
 
 import { rhythm } from "../utils/typography"
 
-import {StyledLink} from "./components/link"
+import {StyledLink} from "./link"
 
 import "../css/layout.css"
 
