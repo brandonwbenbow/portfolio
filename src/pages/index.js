@@ -18,7 +18,6 @@ class IndexPage extends React.Component {
           title="Home"
           keywords={[`blog`, `devlog`, `gatsby`, `javascript`, `react`]}
         />
-        <script data-ad-client="ca-pub-8631961845697038" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <div className="flex-center" style={{maxHeight: "100vh", height: "100vh", width: "100%"}}>
           <img style={{position: "absolute", objectFit: "cover", filter: "brightness(0.6)", height: "100vh", width: "100%"}} src="./assets/beach.jpeg"></img>
           <div className="flex-center" style={{flexDirection: "column", position: "relative"}}>

@@ -17,6 +17,7 @@ export default function HTML(props) {
           href="opensearch.xml"
         />
         {props.headComponents}
+        <script data-ad-client="ca-pub-8631961845697038" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
       </head>
       <body {...props.bodyAttributes}>
         {props.preBodyComponents}

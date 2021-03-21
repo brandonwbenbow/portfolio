@@ -5,7 +5,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Button from "../components/button"
 import SearchPosts from "../components/searchPosts"
-import StyledLink from "../components/link"
+import {StyledLink} from "../components/link"
 
 import "../css/layout.css"
 
