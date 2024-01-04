@@ -1,0 +1,135 @@
+
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Brandon</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet"> 
+        <style>
+            :root {
+                --system-font: "Open Sans", system-ui, "Segoe UI", Roboto, 
+                    sHelvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+                --system-code: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
+
+                --link-color: #0386d3;
+                --link-hover: #ffffff11;
+            }
+
+            * {
+                margin: 0;
+                position: relative;
+                box-sizing: border-box;
+                color: #fff;
+                font-family: var(--system-font);
+            }
+
+            code {
+                font-family: var(--system-code);
+            }
+
+            a {
+                color: var(--link-color);
+                text-decoration: none;
+            }
+
+            body {
+                background-color: #0c0c0e;
+                min-height: 100vh;
+                margin: 0px !important;
+            }
+
+            header, nav {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .name {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .name * {
+                position: relative;
+            }
+
+            .name h2 {
+                font-size: max(18px, 4vh);
+                line-height: max(18px, 4vh);
+                left: min(-0.2vh, -0.5px);
+                top: 0vh;
+                width: fit-content;
+            }
+
+            .name h1 {
+                font-size: max(42px, 10vh);
+                line-height: max(42px, 8vh);
+                left: min(-0.8vh, -3px);
+                letter-spacing: -0.03em;
+            }
+
+            .name + article {
+                padding-top: 1vh;
+                left: -0.1vh;
+            }
+
+            .italic {
+                font-style: italic;
+            }
+
+            .tag-pill {
+                padding: 4px 12px;
+                border-radius: 100px;
+                background-color: #ffffff22;
+                font-size: smaller;
+            }
+
+            a.tag-pill {
+                transition: all 0.4s;
+            }
+
+            a.tag-pill:hover {
+                background-color: var(--link-hover);
+            }
+
+            pre {
+                display: block;
+            }
+
+            code {
+                color: #AEAEAF
+            }
+
+            pre + code {
+                padding: 10px;
+                border-radius: 5px;
+                background-color: #00000055;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+    <style>
+        main {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    </style>
+    <span class="name">
+        <h2>Hi, I'm</h2>
+        <h1>Brandon Benbow</h1>
+    </span>
+    <article>
+        I have a few <a href="/project">Things</a> I'm working on, maybe even some <a href="/blog">Posts</a>.<br>
+        I'm adding stuff here as I make them, check back later for more.<br>
+        Look <a href="/about">Here</a> for more info.
+    </article>
+</main>
+    </body>
+</html>

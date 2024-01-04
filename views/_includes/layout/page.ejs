@@ -1,0 +1,66 @@
+---
+layout: layout/base.ejs
+---
+<style>
+    nav {
+        padding: 10px 20px;
+        position: sticky;
+        top: 0px;
+        background-color: #0c0c0e;
+    }
+
+    main {
+        padding: 20px;
+        padding-top: 0px;
+    }
+
+    ul.content-list {
+        padding-left: 0px;
+        list-style: none;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    ul.content-list li.post {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: larger;
+        gap: 5px;
+    }
+
+    ul.content-list li .post-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    ul.content-list li.post > *:first-child {
+        flex: 1;
+    }
+
+
+    ul.content-list li.post .post-info {
+        flex-basis: 100%;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 5px;
+        font-size: smaller;
+    }
+</style>
+<nav>
+    <a href="/">index</a>
+    <% let list = locals.page.url.split('/'), current_link = ""; for(let i = 1; i < list.length - 2; i++) { %>
+        <% current_link += "/" + list[i] %>
+        - <a href=<%- current_link %>><%- list[i] %></a>
+    <% } %>
+    <span>-</span>
+    <%- locals.page.fileSlug %>
+</nav>
+<main>
+    <%- content %>
+</main>

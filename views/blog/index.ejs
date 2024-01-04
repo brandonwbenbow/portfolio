@@ -1,0 +1,32 @@
+---
+layout: layout/page.ejs
+title: Blog
+---
+<ul class="content-list">
+    <% for(var blog in collections.blog) { %>
+        <% 
+            blog = collections.blog[blog];
+            if(blog.data.hidden) { continue; }
+        %>
+        <li class="post">
+            <a class="post-link" href=<%- blog.page.url %>>
+                <%- blog.data.title %>
+                <%
+                    date = blog.data.date
+                    if(date instanceof Date) {
+                %>
+                    <p><%- date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDay() %></p>
+                <% } else { %>
+                    <p><%- date %></p>
+                <% } %>
+            </a> 
+            <div class="post-info">
+                <% for(let i = 0; i < blog.data.categories.length; i++) { %>
+                    <a class="tag-pill" href=<%- "?filter=" + blog.data.categories[i] %>>
+                        <%- blog.data.categories[i].charAt(0).toUpperCase() + blog.data.categories[i].slice(1) %>
+                    </a>
+                <% } %>
+            </div>
+        </li>
+    <% } %>
+</ul>

@@ -1,0 +1,25 @@
+---
+layout: layout/markdown.ejs
+title: Blog
+
+date: Created
+last: Last Modified
+
+categories: []
+tags: blog
+---
+<style>
+    header {
+        justify-content: space-between;
+    }
+
+    header * {
+        margin: 0px;
+    }
+</style>
+<header>
+    <h1><%- title %></h1>
+    <span><%- date instanceof Date ? date.toUTCString() : 'TBD' %></span>
+</header>
+<%- content %>
+
