@@ -6,7 +6,7 @@ title: Projects
     <% for(var project in collections.project) { %>
         <% 
             project = collections.project[project]; 
-            if(project.data.hidden) { continue; }
+            if(process?.env?.ELEVENTY_RUN_MODE !== 'serve' && project.data.hidden) { continue; }
         %>
         <li class="post">
             <a class="post-link" href=<%- project.page.url %>>

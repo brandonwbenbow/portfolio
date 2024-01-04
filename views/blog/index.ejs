@@ -6,7 +6,7 @@ title: Blog
     <% for(var blog in collections.blog) { %>
         <% 
             blog = collections.blog[blog];
-            if(blog.data.hidden) { continue; }
+            if(process.env.ELEVENTY_RUN_MODE !== 'serve' && blog.data.hidden) { continue; }
         %>
         <li class="post">
             <a class="post-link" href=<%- blog.page.url %>>
