@@ -1,5 +1,4 @@
 
-
 <!doctype html>
 <html lang="en">
     <head>
@@ -17,6 +16,8 @@
 
                 --link-color: #0386d3;
                 --link-hover: #ffffff11;
+
+                --code-color: #AEAEAF;
             }
 
             * {
@@ -46,6 +47,11 @@
                 display: flex;
                 align-items: center;
                 gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .hide {
+                display: none !important;
             }
 
             .name {
@@ -101,7 +107,7 @@
             }
 
             code {
-                color: #AEAEAF
+                color: var(--code-color);
             }
 
             pre + code {
@@ -142,11 +148,19 @@
         gap: 5px;
     }
 
+    ul.content-list li.post.hidden-post {
+        opacity: 0.5;
+    }
+
     ul.content-list li .post-link {
         display: flex;
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
+    }
+
+    ul.content-list li .post-link p {
+        font-size: smaller;
     }
 
     ul.content-list li.post > *:first-child {
@@ -168,38 +182,55 @@
     
     <span>-</span>
     blog
+    <a class="hide" id="remove-filter-link">remove filters</a>
+    <span class="hide" id="filter-list"></span>
+    <span style="flex: 1; display: flex; justify-content: flex-end;">
+        
+
+        
+            <a href="/projects">projects</a>
+        
+    </span>
 </nav>
 <main>
     <ul class="content-list">
     
-        
-        <li class="post">
-            <a class="post-link" href=/blog/example/>
-                Example Blog Post
-                
-                    <p>2024-1-1</p>
-                
-            </a> 
-            <div class="post-info">
-                
-                    <a class="tag-pill" href=?filter=programming>
-                        Programming
-                    </a>
-                
-                    <a class="tag-pill" href=?filter=art>
-                        Art
-                    </a>
-                
-                    <a class="tag-pill" href=?filter=science>
-                        Science
-                    </a>
-                
-            </div>
-        </li>
     
         
+        
+    
+        <span class="italic">There doesn't seem to be anything here yet.</span>
+    
 </ul>
 </main>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log(window.location);
+        let query = new URLSearchParams(window.location.search);
+
+        if(query.has('filter')) {
+            let filter_target = Array.from(document.getElementsByClassName('content-list'));
+            for(let i = 0; i < filter_target.length; i++) {
+                let children = filter_target[i].children;
+                for(child in children) {
+                    let tags = children[child]?.dataset?.tags?.split(',') ?? [];
+                    if(!tags.includes(query.get('filter'))) {
+                        children[child]?.classList?.add('hide');
+                    }
+                }
+            }
+
+            let reset = document.getElementById('remove-filter-link');
+            let filter_list = document.getElementById('filter-list');
+
+            reset.href = `${window.location.pathname}`;
+            reset.classList.remove('hide');
+            
+            filter_list.textContent = `[ ${query.get('filter')} ]`;
+            filter_list.classList.remove('hide');
+        }
+    })
+</script>
 
     </body>
 </html>

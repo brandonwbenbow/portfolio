@@ -4,7 +4,7 @@ title: Example Project Page
 date: 2024-01-01
 last: Last Modified
 categories: ["node","python","go"]
-tags: project
+hidden: true
 ---
 # Example Project Page
 ### This is an example of the "Example" project in the "Project" directory

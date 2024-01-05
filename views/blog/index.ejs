@@ -3,22 +3,19 @@ layout: layout/page.ejs
 title: Blog
 ---
 <ul class="content-list">
+    <% let post_count = 0; %>
     <% for(var blog in collections.blog) { %>
         <% 
-            blog = collections.blog[blog];
-            if(process.env.ELEVENTY_RUN_MODE !== 'serve' && blog.data.hidden) { continue; }
+            blog = collections.blog[blog], dev = process.env.ELEVENTY_RUN_MODE === 'serve';
+            if(!dev && blog.data.hidden) { continue; }
+            post_count += dev && blog.data.hidden ? 0 : 1;
+            let tags = blog.data.categories.join(',');
         %>
-        <li class="post">
+        <li class="post<%= dev && blog.data.hidden ? " hidden-post" : "" %>" data-tags="<%= tags %>">
             <a class="post-link" href=<%- blog.page.url %>>
                 <%- blog.data.title %>
-                <%
-                    date = blog.data.date
-                    if(date instanceof Date) {
-                %>
-                    <p><%- date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDay() %></p>
-                <% } else { %>
-                    <p><%- date %></p>
-                <% } %>
+                <% date = blog.data.date %>
+                <p><%= locals.collections.all[0].page.getUTCDateString(date); %></p>
             </a> 
             <div class="post-info">
                 <% for(let i = 0; i < blog.data.categories.length; i++) { %>
@@ -28,5 +25,8 @@ title: Blog
                 <% } %>
             </div>
         </li>
+    <% } %>
+    <% if(post_count === 0) { %>
+        <span class="italic">There doesn't seem to be anything here yet.</span>
     <% } %>
 </ul>

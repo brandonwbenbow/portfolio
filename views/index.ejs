@@ -1,6 +1,14 @@
 ---
 layout: layout/base.ejs
 ---
+<% locals.page.getUTCDateString = (date) => {
+    let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let month = ['January', 'February', 'March', 'April', 'May', 'June', 
+        'July', 'August', 'September', 'October', 'November', 'December']
+
+    if(!(date instanceof Date)) { return date; }
+    return `${days[date.getUTCDay()]}, ${month[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`
+} %>
 <main>
     <style>
         main {
@@ -15,7 +23,7 @@ layout: layout/base.ejs
         <h1>Brandon Benbow</h1>
     </span>
     <article>
-        I have a few <a href="/project">Things</a> I'm working on, maybe even some <a href="/blog">Posts</a>.<br>
+        I have a few <a href="/projects">Things</a> I'm working on, maybe even some <a href="/blog">Posts</a>.<br>
         I'm adding stuff here as I make them, check back later for more.<br>
         Look <a href="/about">Here</a> for more info.
     </article>

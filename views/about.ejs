@@ -11,7 +11,10 @@ layout: layout/page.ejs
 <br>
 <h4>Site:</h4>
 <p class="italic">Made with <%- locals.eleventy.generator %></p>
-<% if(process.env.ELEVENTY_RUN_MODE === 'serve') { %>
-    <br>
-    <code>running in "serve" mode, dev rendering enabled...</code>     
+<% 
+    const { page, eleventy } = locals;
+    if(process.env.ELEVENTY_RUN_MODE === 'serve') { %>
+        <br>
+        <code>running in "serve" mode, dev rendering enabled...</code>
+        <pre><code><%= JSON.stringify({ page, eleventy }, null, 2); %></code></pre>
 <% } %>

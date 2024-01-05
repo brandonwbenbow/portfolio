@@ -1,0 +1,32 @@
+---
+layout: layout/page.ejs
+title: Projects
+---
+<ul class="content-list">
+    <% let post_count = 0; %>
+    <% for(var project in collections.projects) { %>
+        <% 
+            project = collections.projects[project], dev = process.env.ELEVENTY_RUN_MODE === 'serve'; 
+            if(!dev && project.data.hidden) { continue; }
+            post_count += dev && project.data.hidden ? 0 : 1;
+            let tags = project.data.categories.join(',');
+        %>
+        <li class="post<%= dev && project.data.hidden ? " hidden-post" : "" %>" data-tags="<%= tags %>">
+            <a class="post-link" href=<%- project.page.url %>>
+                <%- project.data.title %>
+                <% let date = project.page.date %>
+                <p><%= "" ?? locals.collections.all[0].page.getUTCDateString(date); %></p>
+            </a> 
+            <div class="post-info">
+                <% for(let i = 0; i < project.data.categories.length; i++) { %>
+                    <a class="tag-pill" href=<%- "?filter=" + project.data.categories[i] %>>
+                        <%- project.data.categories[i].charAt(0).toUpperCase() + project.data.categories[i].slice(1) %>
+                    </a>
+                <% } %>
+            </div>
+        </li>
+    <% } %>
+    <% if(post_count === 0) { %>
+        <span class="italic">There doesn't seem to be anything here yet.</span>
+    <% } %>
+</ul>

@@ -19,7 +19,7 @@ tags: blog
 </style>
 <header>
     <h1><%- title %></h1>
-    <span><%- date instanceof Date ? date.toUTCString() : 'TBD' %></span>
+    <span><%- date instanceof Date ? locals.collections.all[0]?.page?.getUTCDateString(date) : date %></span>
 </header>
 <%- content %>
 
