@@ -50,6 +50,11 @@
                 flex-wrap: wrap;
             }
 
+            button {
+                background-color: #0c0c0e;
+                user-select: none;
+            }
+
             .hide {
                 display: none !important;
             }
@@ -196,8 +201,31 @@
     <ul class="content-list">
     
     
+    
         
-        
+        <li class="post hidden-post" data-tags="programming,art,science">
+            <a class="post-link" href=/blog/example/>
+                Example Blog Post
+                
+                <p>Monday, January 1, 2024</p>
+            </a> 
+            <div class="post-info">
+                
+                    <a class="tag-pill" href=?filter=programming>
+                        Programming
+                    </a>
+                
+                    <a class="tag-pill" href=?filter=art>
+                        Art
+                    </a>
+                
+                    <a class="tag-pill" href=?filter=science>
+                        Science
+                    </a>
+                
+            </div>
+        </li>
+    
     
         <span class="italic">There doesn't seem to be anything here yet.</span>
     

@@ -15,7 +15,7 @@ title: Projects
             <a class="post-link" href=<%- project.page.url %>>
                 <%- project.data.title %>
                 <% let date = project.page.date %>
-                <p><%= "" ?? locals.collections.all[0].page.getUTCDateString(date); %></p>
+                <p><%= "" ?? locals.collections.all[0].page?.getUTCDateString(date) ?? date; %></p>
             </a> 
             <div class="post-info">
                 <% for(let i = 0; i < project.data.categories.length; i++) { %>

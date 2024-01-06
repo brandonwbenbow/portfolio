@@ -4,6 +4,7 @@ title: Blog
 ---
 <ul class="content-list">
     <% let post_count = 0; %>
+    <% // console.log(locals.collections.all[0].page) %>
     <% for(var blog in collections.blog) { %>
         <% 
             blog = collections.blog[blog], dev = process.env.ELEVENTY_RUN_MODE === 'serve';
@@ -15,7 +16,7 @@ title: Blog
             <a class="post-link" href=<%- blog.page.url %>>
                 <%- blog.data.title %>
                 <% date = blog.data.date %>
-                <p><%= locals.collections.all[0].page.getUTCDateString(date); %></p>
+                <p><%= locals.collections.all[0].page?.getUTCDateString(date) ?? date; %></p>
             </a> 
             <div class="post-info">
                 <% for(let i = 0; i < blog.data.categories.length; i++) { %>
