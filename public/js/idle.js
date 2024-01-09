@@ -9,8 +9,8 @@ class IdleGame {
     buildings = new Map();
     producers = new Map();
 
-    constructor() {
-        this.ConstructDom();
+    constructor(config) {
+        this.ConstructDom(config);
         this.Load();
     }
 
@@ -65,7 +65,7 @@ class IdleGame {
         this.producers.set(producer.name, producer);
     }
 
-    ConstructDom() {
+    ConstructDom(config) {
         const createButton = (text, title, callback, cost) => {
             let elem = document.createElement('button');
             elem.textContent = text;
@@ -77,29 +77,47 @@ class IdleGame {
             return elem;
         }
 
+        const createButtonGroup = (id) => {
+            let elem = document.createElement('div');
+            elem.classList.add('button-group');
+            elem.id = id;
+            return elem;
+        }
+
         let group = document.getElementById('buttons');
+        let type_group = [];
 
-        // Trees
-        group.appendChild(createButton("Tree", "1 Food, 2 Work", () => { this.AddToPile(new Produce(1, 2)); }));
-        group.appendChild(createButton("Wood Cutter", "0.2 Food, 0.4 Work per Tick", () => {
-            this.AddProducer(new Producer("Wood Cutter", new Produce(0.2, 0.4)));
-        }, new Produce(10)));
-        
-        group.appendChild(document.createElement('br'));
+        const addList = (config_list, case_type) => {
+            for(let i = 0; i < config_list?.length ?? 0; i++) {
+                let rec = config_list[i];
+                if(type_group[rec.type] == undefined) { type_group[rec.type] = createButtonGroup(`type-${rec.type}`); }
+                let cb = () => {}, obj = null;
 
-        // Rock
-        group.appendChild(createButton("Rock", "4 Work", () => { this.AddToPile(new Produce(0, 4)); }));
-        group.appendChild(createButton("Stone Cutter", "1 Work per Tick", () => {
-            this.AddProducer(new Producer("Stone Cutter", new Produce(0, 1)));
-        }, new Produce(10, 10)));
+                switch(case_type) {
+                    case 'resources':
+                        obj = new Produce(...rec.produce);
+                        cb = () => { this.AddToPile(obj) }
+                        break;
+                    case 'buildings':
+                        break;
+                    case 'producers':
+                        obj = new Producer(rec.name, new Produce(...rec.produce), new Produce(...rec.cost))
+                        cb = () => { this.AddProducer(obj); }
+                        break;
+                }
 
-        group.appendChild(document.createElement('br'));
+                console.log("Button:", rec.name, obj?.toTitle(), cb, rec?.cost)
+                type_group[rec.type].appendChild(createButton(rec.name, obj?.toTitle(), cb, rec?.cost));
+            }
+        }
 
-        // Wheat
-        group.appendChild(createButton("Wheat", "3 Food", () => { this.AddToPile(new Produce(3)); }));
-        group.appendChild(createButton("Farmer", "0.8 Food per Tick", () => {
-            this.AddProducer(new Producer("Farmer", new Produce(0.8)));
-        }, new Produce(20, 20)));
+        addList(config.resources, 'resources');
+        addList(config.buildings, 'buildings');
+        addList(config.producers, 'producers');
+
+        for(let i = 0; i < type_group.length; i++) {
+            group.appendChild(type_group[i]);
+        }
     }
 
     UpdateStats() {
@@ -164,11 +182,6 @@ class Produce {
         this.culture = roundDec(this.culture);
     }
 
-    toString() {
-        this.roundFloats();
-        return `Food: ${this.food} | Work: ${this.work} | Gold: ${this.gold} | Science: ${this.science} | Culture: ${this.culture}`;
-    }
-
     add(produce) {
         this.food += produce.food ?? 0;
         this.work += produce.work ?? 0;
@@ -199,6 +212,26 @@ class Produce {
             culture: this.culture
         }
     }
+
+    toString() {
+        this.roundFloats();
+        return `Food: ${this.food} | Work: ${this.work} | Gold: ${this.gold} | Science: ${this.science} | Culture: ${this.culture}`;
+    }
+
+    toTitle() {
+        const addToString = (str, value, name) => {
+            return value > 0 ? `${str.length > 0 ? ', ' : ''}${value} ${name}` : '';
+        }
+
+        let str = ''
+        str += addToString(str, this.food, 'Food');
+        str += addToString(str, this.work, 'Work');
+        str += addToString(str, this.gold, 'Gold');
+        str += addToString(str, this.science, 'Science');
+        str += addToString(str, this.culture, 'Culture');
+
+        return str;
+    }
 }
 
 class Resource {
@@ -219,6 +252,8 @@ class Building {
     constructor() {}
 
     toJSON() {}
+
+    toTitle() {}
 }
 
 class Producer {
@@ -250,9 +285,46 @@ class Producer {
             produce: this.produce?.toJSON()
         }
     }
+
+    toTitle() {
+        const addToString = (str, value, name) => {
+            return value > 0 ? `${str.length > 0 ? ', ' : ''}${value} ${name} per Tick` : '';
+        }
+
+        let str = ''
+        str += addToString(str, this.food, 'Food');
+        str += addToString(str, this.work, 'Work');
+        str += addToString(str, this.gold, 'Gold');
+        str += addToString(str, this.science, 'Science');
+        str += addToString(str, this.culture, 'Culture');
+
+        return str;
+    }
+}
+
+const game_config = {
+    resources: [
+        { type: 0, name: 'Tree', produce: [1, 2] },
+        { type: 1, name: 'Stone', produce: [0, 4] },
+        { type: 2, name: 'Wheat', produce: [3] },
+        { type: 3, name: 'Gold', produce: [0, 0, 1] },
+        { type: 4, name: 'Book', produce: [0, 0, 0, 2] },
+        { type: 5, name: 'Play', produce: [0, 0, 0, 0, 2] }
+    ],
+    buildings: [
+
+    ],
+    producers: [
+        { type: 0, name: 'Tree Chopper', produce: [0.2, 0.4], cost: [5, 5] },
+        { type: 1, name: 'Stone Cutter', produce: [0, 1], cost: [5, 10] },
+        { type: 2, name: 'Farmer', produce: [0.8], cost: [15, 15, 10] },
+        { type: 3, name: 'Gold Digger', produce: [0, 0, 0.1], cost: [10, 50, 10] },
+        { type: 4, name: 'Researcher', produce: [0, 0, 0, 0.2], cost: [100, 0, 50, 10] },
+        { type: 5, name: 'Playwrite', produce: [0, 0, 0, 0, 0.2], cost: [25, 5, 50, 20, 20] }
+    ]
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const game = new IdleGame();
+    const game = new IdleGame(game_config);
     game.Start();
 });
