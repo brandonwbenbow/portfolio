@@ -60,9 +60,23 @@ class IdleGame {
         this.all_time.add(produce);
     }
 
+    UseResource(name) {
+        let resource = this.resources.get(name);
+        if(!resource || resource.count <= 0) { return false; }
+        resource.count -= 1; 
+        this.AddToPile(resource.produce);
+        return true;
+    }
+
+    AddResource() {
+
+    }
+
     AddProducer(producer) {
-        if(this.producers.has(producer.name)) { return this.producers.get(producer.name).count += 1; }
+        // use resources
+        if(this.producers.has(producer.name)) { this.producers.get(producer.name).count += 1; return true; }
         this.producers.set(producer.name, producer);
+        return true;
     }
 
     ConstructDom(config) {
@@ -84,6 +98,61 @@ class IdleGame {
             return elem;
         }
 
+        const createResourceButton = (resource, callback) => {
+            // custom button with data rendering
+            callback = callback ? callback : () => { this.UseResource(resource.name) }
+
+            let elem = document.createElement('div');
+            elem.id = `resource-${resource.name}`;
+            elem.classList.add('idle-button', 'resource-button');
+
+            let elem2 = document.createElement('p');
+            elem2.textContent = resource.name;
+            elem.appendChild(elem2);
+
+            elem2 = document.createElement('p');
+            elem2.classList.add('count');
+            elem2.textContent = resource.count;
+            elem.appendChild(elem2);
+
+            elem2 = document.createElement('button');
+            elem2.textContent = "Use Resource";
+            elem2.setAttribute('title', resource.produce.toTitle());
+            elem2.onclick = callback;
+            elem.appendChild(elem2);
+
+            return elem;
+        }
+
+        const createProducerButton = (producer, callback) => {
+            // custom button with data rendering
+            callback = callback ? callback : () => { this.AddProducer(producer); }
+
+            let elem = document.createElement('div');
+            elem.id = `resource-${producer.name}`;
+            elem.classList.add('idle-button', 'producer-button');
+
+            let elem2 = document.createElement('p');
+            elem2.textContent = producer.name;
+            elem.appendChild(elem2);
+
+            elem2 = document.createElement('p');
+            elem2.classList.add('count');
+            elem2.textContent = producer.count;
+            elem.appendChild(elem2);
+
+            elem2 = document.createElement('button');
+            elem2.textContent = "Add Producer"
+            elem2.setAttribute('title', producer.toTitle());
+            elem2.onclick = () => {
+                if(!this.stockpile.has(producer.cost)) { return; }
+                this.stockpile.remove(producer.cost); callback();
+            }
+            elem.appendChild(elem2);
+
+            return elem;
+        }
+
         let group = document.getElementById('buttons');
         let type_group = [];
 
@@ -91,23 +160,20 @@ class IdleGame {
             for(let i = 0; i < config_list?.length ?? 0; i++) {
                 let rec = config_list[i];
                 if(type_group[rec.type] == undefined) { type_group[rec.type] = createButtonGroup(`type-${rec.type}`); }
-                let cb = () => {}, obj = null;
 
+                let obj = null;
                 switch(case_type) {
                     case 'resources':
-                        obj = new Produce(...rec.produce);
-                        cb = () => { this.AddToPile(obj) }
+                        obj = new Resource(rec.name, new Produce(...rec.produce));
+                        type_group[rec.type].appendChild(createResourceButton(obj));
                         break;
                     case 'buildings':
                         break;
                     case 'producers':
-                        obj = new Producer(rec.name, new Produce(...rec.produce), new Produce(...rec.cost))
-                        cb = () => { this.AddProducer(obj); }
+                        obj = new Producer(rec.name, new Produce(...rec.produce), new Produce(...rec.cost));
+                        type_group[rec.type].appendChild(createProducerButton(obj));
                         break;
                 }
-
-                console.log("Button:", rec.name, obj?.toTitle(), cb, rec?.cost)
-                type_group[rec.type].appendChild(createButton(rec.name, obj?.toTitle(), cb, rec?.cost));
             }
         }
 
@@ -235,23 +301,37 @@ class Produce {
 }
 
 class Resource {
-    name = 'Resource';
-    count = 1;
+    name = "Resource";
+    count = 100; // removes instead of adds on use
     produce;
+    // unlock maybe?
 
-    constructor() {}
+    constructor(name, produce = new Produce(), count = 1) {
+        this.name = name?.name || name || "Resource";
+        this.count = name?.count || count;
+        this.produce = name?.produce ? name?.produce?.toJSON ? name.produce : new Produce(name.produce) : produce;
+    }
 
-    toJSON() {}
+    toJSON() {
+        return {
+            name: this.name,
+            count: this.count,
+            produce: this.produce?.toJSON()
+        }
+    }
 }
 
 class Building {
     name = 'Building';
     count = 1;
     produce;
+    cost;
 
     constructor() {}
 
-    toJSON() {}
+    toJSON() {
+
+    }
 
     toTitle() {}
 }
@@ -260,12 +340,14 @@ class Producer {
     name = "Producer";
     count = 1;    
     produce;
+    cost;
 
     // Can Accept Name parameter as Procder toJSON output
-    constructor(name, perTick = new Produce(), count = 1) {
+    constructor(name, perTick = new Produce(), cost = new Produce, count = 1) {
         this.name = name?.name || name || "Producer";
         this.count = name?.count || count;
         this.produce = name?.produce ? name?.produce?.toJSON ? name.produce : new Produce(name.produce) : perTick;
+        this.cost = name?.cost ? name?.cost?.toJSON ? name.cost : new Produce(name.cost) : cost;
     }
 
     asCount(produce = this.count) {
@@ -287,17 +369,7 @@ class Producer {
     }
 
     toTitle() {
-        const addToString = (str, value, name) => {
-            return value > 0 ? `${str.length > 0 ? ', ' : ''}${value} ${name} per Tick` : '';
-        }
-
-        let str = ''
-        str += addToString(str, this.food, 'Food');
-        str += addToString(str, this.work, 'Work');
-        str += addToString(str, this.gold, 'Gold');
-        str += addToString(str, this.science, 'Science');
-        str += addToString(str, this.culture, 'Culture');
-
+        let str = this.produce.toTitle() + ` per Tick - Cost: ${this.cost.toTitle()}`;
         return str;
     }
 }
