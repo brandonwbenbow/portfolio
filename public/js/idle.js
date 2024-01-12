@@ -68,8 +68,10 @@ class IdleGame {
         return true;
     }
 
-    AddResource() {
-
+    AddResource(resource) {
+        if(this.resources.has(resource.name)) { this.resources.get(resource.name).count += 1; return true; }
+        this.resources.set(resource.name, resource);
+        return true;
     }
 
     AddProducer(producer) {
