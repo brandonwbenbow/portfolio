@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Projects</title>
+        <title>Idle Tactic</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet"> 
@@ -185,8 +185,11 @@
 <nav>
     <a href="/">index</a>
     
+        
+        - <a href=/projects>projects</a>
+    
     <span>-</span>
-    projects
+    idle-tactic
     <a class="hide" id="remove-filter-link">remove filters</a>
     <span class="hide" id="filter-list"></span>
     <span style="flex: 1; display: flex; justify-content: flex-end;">
@@ -198,85 +201,38 @@
     </span>
 </nav>
 <main>
-    <ul class="content-list">
-    
-    
-        
-        <li class="post hidden-post" data-tags="node,python,go">
-            <a class="post-link" href=/projects/example/>
-                Example Project Page
-                
-                <p></p>
-            </a> 
-            <div class="post-info">
-                
-                    <a class="tag-pill" href=?filter=node>
-                        Node
-                    </a>
-                
-                    <a class="tag-pill" href=?filter=python>
-                        Python
-                    </a>
-                
-                    <a class="tag-pill" href=?filter=go>
-                        Go
-                    </a>
-                
-            </div>
-        </li>
-    
-        
-        <li class="post hidden-post" data-tags="javascript">
-            <a class="post-link" href=/projects/idle-civ/>
-                Idle Civ
-                
-                <p></p>
-            </a> 
-            <div class="post-info">
-                
-                    <a class="tag-pill" href=?filter=javascript>
-                        Javascript
-                    </a>
-                
-            </div>
-        </li>
-    
-        
-        <li class="post hidden-post" data-tags="go">
-            <a class="post-link" href=/projects/go-backend/>
-                Go Microservice Backend
-                
-                <p></p>
-            </a> 
-            <div class="post-info">
-                
-                    <a class="tag-pill" href=?filter=go>
-                        Go
-                    </a>
-                
-            </div>
-        </li>
-    
-        
-        <li class="post hidden-post" data-tags="javascript">
-            <a class="post-link" href=/projects/idle-tactic/>
-                Idle Tactic
-                
-                <p></p>
-            </a> 
-            <div class="post-info">
-                
-                    <a class="tag-pill" href=?filter=javascript>
-                        Javascript
-                    </a>
-                
-            </div>
-        </li>
-    
-    
-        <span class="italic">There doesn't seem to be anything here yet.</span>
-    
-</ul>
+    <div id="stats"></div>
+<div id="buttons"></div>
+<script type="module" src="/public/js/tactic.js"></script>
+<style>
+    .button-group {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .idle-button {
+        background-color: #ffffff33;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+</style>
+
+
+
+<style>
+    * {
+        margin: revert;
+    }
+
+    main > *:first-child {
+        margin-top: 0px;
+    }
+</style>
 </main>
 <script>
     document.addEventListener('DOMContentLoaded', () => {

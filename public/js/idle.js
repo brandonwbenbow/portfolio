@@ -1,6 +1,6 @@
-import { accurateTimer } from "./time.js";
+import { Game } from "./game.js";
 
-class IdleGame {
+export class IdleGame extends Game {
     all_time = new Produce();
     stockpile = new Produce();
     growth = new Produce();
@@ -9,23 +9,18 @@ class IdleGame {
     buildings = new Map();
     producers = new Map();
 
-    constructor(config) {
-        this.ConstructDom(config);
-        this.Load();
-    }
+    constructor(config) { super(config); }
 
-    _last_tick_time;
-    _timer;
     Start() {
+        this.Load();
+
         this.Tick();
         this._timer = accurateTimer(() => { this.Tick() });
 
         this.Update();
     }
 
-    Stop() {
-        this._timer?.cancel();
-    }
+    // Stop() {} // Handled in Game.js
 
     // Screen Update
     Update() {
@@ -81,7 +76,7 @@ class IdleGame {
         return true;
     }
 
-    ConstructDom(config) {
+    ConstructDom(config = this.config) {
         const createButton = (text, title, callback, cost) => {
             let elem = document.createElement('button');
             elem.textContent = text;
@@ -193,8 +188,8 @@ class IdleGame {
         stats.textContent = this.stockpile.toString();
     }
 
-    Save() {
-        let json = {
+    toJSON() {
+        return {
             all_time: this.all_time.toJSON(),
             stockpile: this.stockpile.toJSON(),
             growth: this.growth.toJSON(),
@@ -203,15 +198,10 @@ class IdleGame {
             buildings: Array.from(this.buildings, ([name, value]) => (value.toJSON())),
             producers: Array.from(this.producers, ([name, value]) => (value.toJSON())),
         }
-
-        window.localStorage.setItem('game', JSON.stringify(json));
-
-        // Refreshing the game speeds up tick time, need to check last tick time on load
-        window.localStorage.setItem('last_tick_time', this._last_tick_time);
     }
 
-    Load() {
-        let json = JSON.parse(window.localStorage.getItem('game') ?? '{}');
+    rehydrateFromJSON(json) {
+        super.rehydrateFromJSON(json);
 
         this.all_time = new Produce(json.all_time);
         this.stockpile = new Produce(json.stockpile);
@@ -220,9 +210,21 @@ class IdleGame {
         this.resources = new Map(json.resources?.map((obj) => [obj.name, new Resource(obj)]) ?? []);
         this.buildings = new Map(json.buildings?.map((obj) => [obj.name, new Building(obj)]) ?? []);
         this.producers = new Map(json.producers?.map((obj) => [obj.name, new Producer(obj)]) ?? []);
-
-        console.log(this, json, this.producers);
     }
+
+    Save() {
+        // Game State
+        window.localStorage.setItem('game', JSON.stringify(this.toJSON()));
+
+        // Refreshing the game speeds up tick time, need to check last tick time on load
+        window.localStorage.setItem('last_tick_time', this._last_tick_time);
+    }
+
+    // Matches Game.js
+    // Load() {
+    //     let json = JSON.parse(window.localStorage.getItem('game') ?? '{}');
+    //     this.rehydrateFromJSON(json);
+    // }
 }
 
 class Produce {
@@ -400,5 +402,6 @@ const game_config = {
 
 document.addEventListener('DOMContentLoaded', () => {
     const game = new IdleGame(game_config);
+    game.ConstructDom(game_config);
     game.Start();
 });
