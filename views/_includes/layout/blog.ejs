@@ -19,7 +19,8 @@ tags: blog
 </style>
 <header>
     <h1><%- title %></h1>
-    <span><%- date instanceof Date ? locals.collections.all[0]?.page?.getUTCDateString(date) : date %></span>
+    <% console.log(date, locals.collections?.all[0]?.page?.date) %>
+    <span><%- date instanceof Date ? date : locals.collections?.all[0]?.page?.date %></span>
 </header>
 <%- content %>
 

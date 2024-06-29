@@ -36,7 +36,10 @@ const Senate = new TacticGame(Config);    // "Government" Level
 const People = new TacticGame(Config);    // "City" Level - Multi City Mechanic Later
 const Battle = new TacticGame(Config);    // "War" Level
 
-//
+// Starting with Empire Layout
+    // Work from Squares to Polygons
+
+const squares = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     // Create DOM

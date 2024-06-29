@@ -20,7 +20,9 @@ title: Projects
             <div class="post-info">
                 <% for(let i = 0; i < project.data.categories.length; i++) { %>
                     <a class="tag-pill" href=<%- "?filter=" + project.data.categories[i] %>>
-                        <%- project.data.categories[i].charAt(0).toUpperCase() + project.data.categories[i].slice(1) %>
+                        <%- 
+                            project.data.categories[i].split('-').map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')
+                        %>
                     </a>
                 <% } %>
             </div>
